@@ -1,0 +1,34 @@
+{
+  "name": "@origamicore/cli",
+  "version": "3.0.0",
+  "bin": {
+    "occli": "./dist/index.js"
+  },
+  "description": "OrigamiCore CLI",
+  "main": "./dist/index.js",
+  "scripts": {
+    "build": "npx tsc",
+    "publish": "npm publish"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/origamicore/cli.git"
+  },
+  "keywords": [
+    "origamicore",
+    "cli"
+  ],
+  "author": "origamicore.com@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/origamicore/core/issues"
+  },
+  "homepage": "https://github.com/origamicore/core#readme",
+  "devDependencies": {
+    "@types/node": "^20.4.3"
+  },
+  "dependencies": {
+    "commander": "^9.3.0",
+    "typescript": "^4.7.3"
+  }
+}
