@@ -2,7 +2,7 @@ import Name from "./name";
 
 export default class Files
 {
-    static userModel:string=`import { OriProps,IOriModel,OriModel } from "origamicore"; 
+    static userModel:string=`import { OriProps,IOriModel,OriModel } from "@origamicore/core"; 
 @OriModel()
 export default class UserModel extends IOriModel
 {
@@ -31,7 +31,7 @@ export default class UserModel extends IOriModel
     
     static serviceIndex(name:Name)
     {
-        return `import { DataInput, ModuleConfig, OriInjectable, OriService, PackageIndex, SessionInput } from "origamicore";
+        return `import { DataInput, ModuleConfig, OriInjectable, OriService, PackageIndex, SessionInput } from "@origamicore/core";
 import ${name.upperCase}Config from "./models/${name.lowerCase}Config";
 import UserModel from './models/userModel';
 
@@ -63,7 +63,7 @@ export default class ${name.upperCase}Service implements PackageIndex
     }
     static serviceConfig(name:Name)
     {
-        return  `import { ModuleConfig, PackageIndex } from "origamicore";
+        return  `import { ModuleConfig, PackageIndex } from "@origamicore/core";
 import ${name.upperCase}Service from "..";
 export default class ${name.upperCase}Config extends ModuleConfig
 {
