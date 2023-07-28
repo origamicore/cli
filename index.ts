@@ -15,10 +15,10 @@ class OriCli
         var method=process.argv[2];
         var defaultVar=process.argv[3];
         this.dir=process.cwd(); 
-        if(method=='--addservice'|| method=='-a')
+        if(method=='--addmodule'|| method=='-a')
         {
-            Log('OriCli v'+pjson.version);
-            this.addService(defaultVar);
+            Log('OcCli v'+pjson.version);
+            this.addModule(defaultVar);
         }
         else if(method=='--version' || method=='-v')
         {
@@ -27,17 +27,17 @@ class OriCli
         }
         else if(method=='--new' || method=='-n')
         {
-            Log('OriCli v'+pjson.version);
+            Log('OcCli v'+pjson.version);
             this.createProject(defaultVar);
         }
         else if(method=='--help' || method=='-h')
         {
-            Log('OriCli v'+pjson.version);
+            Log('OcCli v'+pjson.version);
             this.printHelp()
         }
         else
         {
-            Log('OriCli v'+pjson.version);
+            Log('OcCli v'+pjson.version);
             Log('Wrong arg',Colors.Read);
             this.printHelp()
         }
@@ -45,22 +45,22 @@ class OriCli
     printHelp()
     {
         Log('Example usage')
-        Log('   $ oricli <cammand> <options>')
+        Log('   $ occli <cammand> <options>')
         Log('')
         Log('Commands')
         Log('   --new,-n {{project name}}        create new project')
-        Log('   --addservice,-a {{service name}}    create new service')
-        Log('   --version.-v                        get oricli version')
+        Log('   --addmodule,-a {{module name}}    create new module')
+        Log('   --version.-v                        get occli version')
         Log('')
     }
-    async addService(serviceName:string)
+    async addModule(moduleName:string)
     {
         if(!fs.existsSync(this.dir+'/package.json'))
         {
             return Log('Can not find package.json',Colors.Read);            
         }
-        var folder=this.dir+'/services';
-        var name=new Name(serviceName);
+        var folder=this.dir+'/modules';
+        var name=new Name(moduleName);
         if(!fs.existsSync(folder))
         {
             fs.mkdirSync(folder);
@@ -68,7 +68,7 @@ class OriCli
         folder+='/'+name.lowerCase;
         if(fs.existsSync(folder))
         {
-            return Log('Service exist',Colors.Read)
+            return Log('Module exist',Colors.Read)
         }
         fs.mkdirSync(folder);
         var modelsFolder=folder+'/models/';

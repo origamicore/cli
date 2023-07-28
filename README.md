@@ -23,5 +23,6 @@ occli -n projectName
 ### Create Service
 
 ```sh
-occli --addservice serviceName
+occli --addmodule moduleName
+occli --a moduleName
 ```
