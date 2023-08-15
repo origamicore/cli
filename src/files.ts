@@ -64,7 +64,7 @@ export default class ${name.upperCase}Service implements PackageIndex
     static serviceConfig(name:Name)
     {
         return  `import { ModuleConfig, PackageIndex } from "@origamicore/core";
-import ${name.upperCase}Service from "..";
+import ${name.upperCase}Service from "../Index";
 export default class ${name.upperCase}Config extends ModuleConfig
 {
     async createInstance(): Promise<PackageIndex> {
