@@ -73,9 +73,9 @@ class OriCli
         fs.mkdirSync(folder);
         var modelsFolder=folder+'/models/';
         fs.mkdirSync(modelsFolder);
-        fs.writeFileSync(modelsFolder+name.lowerCase+'Config.ts',Files.serviceConfig(name));
-        fs.writeFileSync(modelsFolder+'userModel.ts',Files.userModel);
-        fs.writeFileSync(folder+'/index.ts',Files.serviceIndex(name));
+        fs.writeFileSync(modelsFolder+name.upperCase+'Config.ts',Files.serviceConfig(name));
+        fs.writeFileSync(modelsFolder+'UserModel.ts',Files.userModel);
+        fs.writeFileSync(folder+'/Index.ts',Files.serviceIndex(name));
     }
     async createProject(name:string)
     {

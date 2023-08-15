@@ -32,8 +32,8 @@ export default class UserModel extends IOriModel
     static serviceIndex(name:Name)
     {
         return `import { DataInput, ModuleConfig, OriInjectable, OriService, PackageIndex, SessionInput } from "@origamicore/core";
-import ${name.upperCase}Config from "./models/${name.lowerCase}Config";
-import UserModel from './models/userModel';
+import ${name.upperCase}Config from "./models/${name.upperCase}Config";
+import UserModel from './models/UserModel';
 
 @OriInjectable({domain:'${name.lowerCase}'})
 export default class ${name.upperCase}Service implements PackageIndex
