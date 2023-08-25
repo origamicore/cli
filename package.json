@@ -8,6 +8,7 @@
   "main": "./dist/index.js",
   "scripts": {
     "build": "npx tsc",
+    "UI": "node ./dist/index.js -u",
     "publish": "npm publish"
   },
   "repository": {
@@ -29,6 +30,9 @@
   },
   "dependencies": {
     "@origamicore/base": "^0.1.0",
+    "@origamicore/core": "^4.1.8",
+    "@origamicore/endpoint": "^1.0.7",
+    "@origamicore/projectmodels": "^0.1.1",
     "commander": "^9.3.0",
     "fs-extra": "^11.1.1",
     "typescript": "^4.7.3",

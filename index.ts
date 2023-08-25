@@ -6,6 +6,7 @@ import Log, { Colors } from "./src/log";
 import Name from "./src/name";
 import UI from "./src/ui/Ui";
 import Project from "./src/project/Project";
+import LocalServer from "./src/local/LocalServer";
 const { exec,spawn  } = require('child_process');
 var pjson = require('../package.json');
 class OriCli
@@ -42,6 +43,11 @@ class OriCli
         {
             Log('OcCli v'+pjson.version);
             UI.connect(defaultVar)
+        }
+        else if(method=='--ui' || method=='-u')
+        {
+            Log('OcCli v'+pjson.version);
+            new LocalServer(parseInt(defaultVar??'4000'))
         }
         else
         {

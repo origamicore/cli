@@ -1,28 +1,44 @@
 import { WebService } from "@origamicore/base";
-import fs from 'fs'
-import UiModel from "./models/UiModel";
+import fs from 'fs' 
 import Log, { Colors } from "../log";
 import Service from "./Server";
-import Listener from "./Listener";
-import { ResponseType } from "./models/ResponseType";
-import Project from "../project/Project";
-import ModuleModel from "./models/ModuleModel";
+import Listener from "./Listener"; 
+import Project from "../project/Project"; 
+import ProjectModel, { ModuleModel, ResponseType } from "@origamicore/projectmodels";
 const uuid=require('uuid'); 
 export default class UI
 {
-    static saveUI(ui:UiModel)
+    static saveUI(ui:ProjectModel)
     {
         let path = process.cwd()+'/.ui';
         fs.writeFileSync(path,JSON.stringify(ui));
     }
-    static getUI():UiModel
+    static getUI():ProjectModel
     {
-        let path = process.cwd()+'/.ui'; 
+        let dir=process.cwd()
+        let path = dir+'/.ui'; 
         if(!fs.existsSync(path))
         {
             fs.writeFileSync(path,JSON.stringify({id:uuid.v4()}));
         }
-        return new UiModel(JSON.parse(fs.readFileSync(path).toString()) )
+        let ui= new ProjectModel(JSON.parse(fs.readFileSync(path).toString()) )
+        if(!ui.name)
+        {
+            if(fs.existsSync(dir+'/package.json'))
+            {
+                let json=JSON.parse(fs.readFileSync(dir+'/package.json').toString());
+                if(json.name)
+                {
+                    ui.name=json.name
+                }
+                else
+                {
+                    ui.name='No Name'
+                }
+            }
+            this.saveUI(ui)
+        } 
+        return ui
     }
     static async work(data:any)
     {

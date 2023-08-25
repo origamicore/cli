@@ -1,6 +1,4 @@
 
-import Project from "../project/Project";
-import { ResponseType } from "./models/ResponseType";
 
 var WebSocketClient  = require('websocket').client;
 // let url='ws://localhost:4001'

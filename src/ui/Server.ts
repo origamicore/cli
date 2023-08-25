@@ -1,5 +1,5 @@
-import { WebService } from "@origamicore/base";
-import UiModel from "./models/UiModel";
+import { WebService } from "@origamicore/base"; 
+import ProjectModel from "@origamicore/projectmodels";
 
 const url='http://uiapi.origamicore.com'
 // const url='http://localhost:4000'
@@ -13,7 +13,7 @@ export default class Service
     {
         return (await WebService.post(url+'/api/addProject',{id},{authorization:token},null) )as any;  
     }
-    static async updateUi(model:UiModel)
+    static async updateUi(model:ProjectModel)
     {
         let token=model.token;
         delete model.token;
