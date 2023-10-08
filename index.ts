@@ -64,8 +64,9 @@ class OriCli
         Log('Commands')
         Log('   --new,-n {{project name}}        create new project')
         Log('   --addmodule,-a {{module name}}    create new module')
-        Log('   --version.-v                        get occli version')
-        Log('   --connect.-c                        connect to ui')
+        Log('   --version,-v                        get occli version')
+        Log('   --connect,-c                        connect to UI server')
+        Log('   --ui,-u                        open UI')
         Log('')
     }
 }

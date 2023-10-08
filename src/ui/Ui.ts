@@ -4,7 +4,7 @@ import Log, { Colors } from "../log";
 import Service from "./Server";
 import Listener from "./Listener"; 
 import Project from "../project/Project"; 
-import ProjectModel, { ModuleModel, ResponseType } from "@origamicore/projectmodels";
+import ProjectModel, { ModuleModel, ResponseType, StaticModule ,EndpointConfig, EndpointConnection,MongoConfig, MongoConnection, RedisConfig, RedisConnection} from "@origamicore/projectmodels";
 const uuid=require('uuid'); 
 export default class UI
 {
@@ -19,7 +19,42 @@ export default class UI
         let path = dir+'/.ui'; 
         if(!fs.existsSync(path))
         {
-            fs.writeFileSync(path,JSON.stringify({id:uuid.v4()}));
+            let project=new ProjectModel({
+                id:uuid.v4(),
+                staticModules:[
+                    new StaticModule({
+                        name:'endpoint',
+                        config:new EndpointConfig({
+                            connections:[
+                                new EndpointConnection({port:3000})
+                            ]
+                        })
+                    }),
+                    new StaticModule({
+                        name:'mongo',
+                        config:new MongoConfig({
+                            connections:[
+                                new MongoConnection({
+                                    name:'mongoContext',
+                                    database:'dbname'
+                                })
+                            ]
+                        })
+                    }),
+                    new StaticModule({
+                        name:'redis',
+                        config:new RedisConfig({
+                            connections:[
+                                new RedisConnection({
+                                    db:0
+                                })
+                            ]
+                        })
+                    }),
+
+                ]
+            })
+            fs.writeFileSync(path,JSON.stringify(project));
         }
         let ui= new ProjectModel(JSON.parse(fs.readFileSync(path).toString()) )
         if(!ui.name)

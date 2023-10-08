@@ -2,6 +2,7 @@ import { ModuleConfig, OriInjectable, OriService, PackageIndex } from "@origamic
 import UI from "../ui/Ui";
 import ProjectModel, { ModuleModel } from "@origamicore/projectmodels";
 import Project from "../project/Project";
+import Compiler from "./services/Compiler";
 
 
 
@@ -47,11 +48,15 @@ export default class LocalService implements PackageIndex
     @OriService({isPublic:true})
     async getProject()
     { 
+        //Compiler.compile(UI.getUI())
         return UI.getUI()
     }
     @OriService({isPublic:true})
     async save(model:ProjectModel)
     { 
+        console.log('>>>',model.modules[0]);
+        
+        // Compiler.compile(model)
         UI.saveUI(model)
     }
 
