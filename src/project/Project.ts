@@ -46,11 +46,11 @@ export default class Project
     {
         if(!moduleName)
         {
-            Log('Wrong Name',Colors.Read)
+            Log('Wrong Name',Colors.Red)
         }
         if(!fs.existsSync(dir+'/package.json'))
         {
-            return Log('Can not find package.json',Colors.Read);            
+            return Log('Can not find package.json',Colors.Red);            
         }
         var folder=dir+'/modules';
         var name=new Name(moduleName);
@@ -61,7 +61,7 @@ export default class Project
         folder+='/'+name.lowerCase;
         if(fs.existsSync(folder))
         {
-            return Log('Module exist',Colors.Read)
+            return Log('Module exist',Colors.Red)
         }
         fs.mkdirSync(folder);
         var modelsFolder=folder+'/models/';

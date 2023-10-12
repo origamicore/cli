@@ -1,6 +1,6 @@
 export  class Colors
 {
-    static Read='\x1b[31m';
+    static Red='\x1b[31m';
     static Green='\x1b[32m';
     static Yellow='\x1b[33m';
     static Blue='\x1b[34m';

@@ -6,10 +6,16 @@ export default class CommonService
         return new Promise((res,rej)=>{
             exec(command ,(error, stdout, stderr)=>{
                 if(showLog)
-                    console.log(error, stdout, stderr);
+                {
+
+                    console.log( error);
+                    console.log( stdout);
+                    console.log( stderr);
+
+                }
                 if(error)
                 {
-                    rej(error)
+                    rej(stdout)
                 }
                 else
                 {

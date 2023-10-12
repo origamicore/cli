@@ -58,7 +58,7 @@ class OriCli
         else
         {
             Log('OcCli v'+pjson.version);
-            Log('Wrong arg',Colors.Read);
+            Log('Wrong arg',Colors.Red);
             this.printHelp()
         }
     }

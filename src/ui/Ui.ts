@@ -111,7 +111,7 @@ export default class UI
             }
             else
             {
-                Log('Token not founed',Colors.Read);
+                Log('Token not founed',Colors.Red);
                 return
             } 
         } 

@@ -1,6 +1,6 @@
 import fs from 'fs'
 import CommonService from '../commonService';
-import Log from '../log';
+import Log, { Colors } from '../log';
 import OrigamiCore, { ConfigModel } from '@origamicore/core';
 import { ChildProcessWithoutNullStreams, spawn } from 'child_process';
 const { exec } = require('child_process');
@@ -18,16 +18,24 @@ export default class DevService
         changes=[]
         let dir =process.cwd();
         Log('Building ...')
-        await CommonService.runCommand('npx tsc --project '+dir+'')
-        if(cp)cp.kill();
-        cp = spawn("node",[dir+'\\dist\\Index.js'])
-        Log('Start' )  
-        cp.stderr.on('data', (data) => {
-            console.log(`stderr: ${data}`);
-        })
-        cp.stdout.on('data', (data) => {
-            console.log(`stdout: ${data}`);
-        });
+        try
+        {
+            await CommonService.runCommand('npx tsc --project '+dir+'',true)
+            if(cp)cp.kill();
+            cp = spawn("node",[dir+'\\dist\\Index.js'])
+            Log('Start' )  
+            cp.stderr.on('data', (data) => {
+                console.log(`stderr: ${data}`);
+            })
+            cp.stdout.on('data', (data) => {
+                console.log(`stdout: ${data}`);
+            });
+
+        }catch(exp){
+            
+            Log('Error ',Colors.Red)
+            Log(exp,Colors.Red) 
+        }
     }
     static async compile()
     { 
@@ -49,6 +57,7 @@ export default class DevService
         let dir =process.cwd();
         await this.compile() 
         fs.watch(dir,{recursive:true},async(data,file)=>{
+            if(!file)return
             let isIgnore=false
             for(let i of ignore)
             {  
