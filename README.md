@@ -26,3 +26,15 @@ occli -n projectName
 occli --addmodule moduleName
 occli --a moduleName
 ```
+
+### Start Project
+
+```sh
+occli dev
+```
+
+### UI Editor
+
+```sh
+occli --ui {{port:default 4000}}
+```

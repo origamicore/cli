@@ -7,6 +7,7 @@ import Name from "./src/name";
 import UI from "./src/ui/Ui";
 import Project from "./src/project/Project";
 import LocalServer from "./src/local/LocalServer";
+import DevService from "./src/dev/devService";
 const { exec,spawn  } = require('child_process');
 var pjson = require('../package.json');
 class OriCli
@@ -22,6 +23,11 @@ class OriCli
         {
             Log('OcCli v'+pjson.version);
             Project.addModule(defaultVar,this.dir);
+        }
+        else if(method=='dev')
+        {
+            Log('Version '+pjson.version,Colors.Green)
+            DevService.runProject()
         }
         else if(method=='--version' || method=='-v')
         {
@@ -62,11 +68,12 @@ class OriCli
         Log('   $ occli <cammand> <options>')
         Log('')
         Log('Commands')
-        Log('   --new,-n {{project name}}        create new project')
+        Log('   --new,-n {{project name}}         create new project')
         Log('   --addmodule,-a {{module name}}    create new module')
-        Log('   --version,-v                        get occli version')
-        Log('   --connect,-c                        connect to UI server')
-        Log('   --ui,-u                        open UI')
+        Log('   --version,-v                      get occli version')
+        Log('   --connect,-c                      connect to UI server')
+        Log('   --ui,-u  {{port}}                 open UI')
+        Log('   dev                               Run as Developer')
         Log('')
     }
 }
