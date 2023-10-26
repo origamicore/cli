@@ -33,6 +33,12 @@ occli --a moduleName
 occli dev
 ```
 
+### Start Project as Bunjs
+
+```sh
+occli bun
+```
+
 ### UI Editor
 
 ```sh

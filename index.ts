@@ -8,6 +8,7 @@ import UI from "./src/ui/Ui";
 import Project from "./src/project/Project";
 import LocalServer from "./src/local/LocalServer";
 import DevService from "./src/dev/devService";
+import RuntimeType from "./src/dev/runtimeType";
 const { exec,spawn  } = require('child_process');
 var pjson = require('../package.json');
 class OriCli
@@ -27,7 +28,12 @@ class OriCli
         else if(method=='dev')
         {
             Log('Version '+pjson.version,Colors.Green)
-            DevService.runProject()
+            DevService.runProject(RuntimeType.Nodes)
+        }
+        else if(method=='bun')
+        {
+            Log('Version '+pjson.version,Colors.Green)
+            DevService.runProject(RuntimeType.Bunjs)
         }
         else if(method=='--version' || method=='-v')
         {
@@ -74,6 +80,7 @@ class OriCli
         Log('   --connect,-c                      connect to UI server')
         Log('   --ui,-u  {{port}}                 open UI')
         Log('   dev                               Run as Developer')
+        Log('   bun                               Run as Bunjs')
         Log('')
     }
 }

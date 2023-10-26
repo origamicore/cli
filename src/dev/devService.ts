@@ -3,6 +3,7 @@ import CommonService from '../commonService';
 import Log, { Colors } from '../log';
 import OrigamiCore, { ConfigModel } from '@origamicore/core';
 import { ChildProcessWithoutNullStreams, spawn } from 'child_process';
+import RuntimeType from './runtimeType';
 const { exec } = require('child_process');
 
 let changes:string[]=[];
@@ -12,7 +13,7 @@ let ignore=['dist','node_modules']
 let cp: ChildProcessWithoutNullStreams;
 export default class DevService
 {
-    static async reset(force:boolean=false)
+    static async reset(runtime:RuntimeType,force:boolean=false)
     {
         if(!changes.length && !force)return;
         changes=[]
@@ -20,9 +21,22 @@ export default class DevService
         Log('Building ...')
         try
         {
-            await CommonService.runCommand('npx tsc --project '+dir+'',true)
+            if(runtime==RuntimeType.Nodes)
+            {
+                await CommonService.runCommand('npx tsc --project '+dir+'')
+            }
             if(cp)cp.kill();
-            cp = spawn("node",[dir+'\\dist\\Index.js'])
+            if(runtime==RuntimeType.Nodes)
+            {
+                cp = spawn("node",[dir+'/dist/Index.js'])
+            }
+            else
+            {
+                let path=dir+'/Index.ts'
+                if(!fs.existsSync(path))path=dir+'\\Index.ts'
+                
+                cp = spawn("bun",[path]) 
+            }
             Log('Start' )  
             cp.stderr.on('data', (data) => {
                 console.log(`stderr: ${data}`);
@@ -37,26 +51,33 @@ export default class DevService
             Log(exp,Colors.Red) 
         }
     }
-    static async compile()
+    static async compile(runtime:RuntimeType)
     { 
-        Log('Installing ...')
-        await CommonService.runCommand('npm i ')
-        await this.reset(true)
+        if(runtime==RuntimeType.Nodes)
+        {
+            Log('Installing ...')
+            await CommonService.runCommand('npm i ')
+
+        }
+        await this.reset(runtime,true)
         let isBusy=false;
-        setInterval(async()=>{
+        setInterval(async()=>{ 
             if(isBusy)return;
             isBusy=true;
             try{
-                await this.reset()
+                await this.reset(runtime)
             }catch(exp){}
             isBusy=false;
         },1000)
     } 
-    static async runProject()
+    static async runProject(runtime:RuntimeType)
     {
         let dir =process.cwd();
-        await this.compile() 
+        await this.compile(runtime) 
+            console.log('>>>>>>>>>11111:',dir);
         fs.watch(dir,{recursive:true},async(data,file)=>{
+            console.log('>>>>>>>>>',file);
+            
             if(!file)return
             let isIgnore=false
             for(let i of ignore)
