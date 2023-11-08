@@ -118,7 +118,7 @@ export default class UI
         if(!ui.registerd)
         {
             let data:any = await Service.addProject(ui.id,ui.token);
-            console.log(data);
+            //console.log(data);
             
             ui.registerd=true;
            // this.saveUI(ui)

@@ -3,6 +3,8 @@ import UI from "../ui/Ui";
 import ProjectModel, { ModuleModel } from "@origamicore/projectmodels";
 import Project from "../project/Project";
 import Compiler from "./services/Compiler";
+import DbService from "../ui/Db";
+import Checker from "../ui/documentChecker/checker";
 
 
 
@@ -14,6 +16,7 @@ export default class LocalService implements PackageIndex
         return ;
     }
     start(): Promise<void> {
+         
         return;
     }
     restart(): Promise<void> {
@@ -23,6 +26,93 @@ export default class LocalService implements PackageIndex
         return;
     }
     
+    @OriService({isPublic:true})
+    async checkDocument(document:string)
+    { 
+        let ui=UI.getUI()
+        return  Checker.check(document)
+       
+    }
+    @OriService({isPublic:true})
+    async deleteCollection(name:string,dbname:string,collection:string)
+    { 
+        let ui=UI.getUI()
+        let con=ui.dbConnection.filter(p=>p.name==name)[0]
+        if(con)
+        {
+           return await  DbService.deleteCollection(con,dbname,collection)
+        }
+    }
+    @OriService({isPublic:true})
+    async deleteDatabase(name:string,dbname:string)
+    { 
+        let ui=UI.getUI()
+        let con=ui.dbConnection.filter(p=>p.name==name)[0]
+        if(con)
+        {
+           return await  DbService.deleteDatabase(con,dbname)
+        }
+    }
+    @OriService({isPublic:true})
+    async createCollection(name:string,dbname:string,collection:string)
+    { 
+        let ui=UI.getUI()
+        let con=ui.dbConnection.filter(p=>p.name==name)[0]
+        if(con)
+        {
+           return await DbService.createCollection(con,dbname,collection)
+        }
+    }
+    @OriService({isPublic:true})
+    async newData(name:string,dbname:string,collection:string,document:any)
+    { 
+        let ui=UI.getUI()
+        let con=ui.dbConnection.filter(p=>p.name==name)[0]
+        if(con)
+        {
+           return await  DbService.newData(con,dbname,collection,document)
+        }
+    }
+    @OriService({isPublic:true})
+    async saveData(name:string,dbname:string,collection:string,document:string)
+    { 
+        let ui=UI.getUI()
+        let con=ui.dbConnection.filter(p=>p.name==name)[0]
+        if(con)
+        {
+           return await  DbService.saveData(con,dbname,collection,document)
+        }
+    }
+    @OriService({isPublic:true})
+    async getData(name:string,dbname:string,collection:string,option:any,filter:any)
+    { 
+        let ui=UI.getUI()
+        let con=ui.dbConnection.filter(p=>p.name==name)[0]
+        if(con)
+        {
+           return await  DbService.getData(con,dbname,collection,option,filter)
+        }
+    }
+    @OriService({isPublic:true})
+    async getDbs(name:string)
+    { 
+        let ui=UI.getUI()
+        let con=ui.dbConnection.filter(p=>p.name==name)[0]
+        if(con)
+        {
+           return  await DbService.getDb(con)
+        }
+    }
+    @OriService({isPublic:true})
+    async getCollections(name:string,dbname:string)
+    { 
+        let ui=UI.getUI()
+        let con=ui.dbConnection.filter(p=>p.name==name)[0]
+        if(con)
+        {
+           return await  DbService.getCollections(con,dbname)
+        }
+    }
     @OriService({isPublic:true})
     async compile()
     { 

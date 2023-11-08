@@ -1,6 +1,6 @@
 {
   "name": "@origamicore/cli",
-  "version": "3.1.4",
+  "version": "3.1.5",
   "bin": {
     "occli": "./dist/index.js"
   },
@@ -30,11 +30,12 @@
   },
   "dependencies": {
     "@origamicore/base": "^0.1.0",
-    "@origamicore/core": "^4.1.10",
+    "@origamicore/core": "^4.1.14",
     "@origamicore/endpoint": "^1.0.10",
-    "@origamicore/projectmodels": "^0.1.1",
+    "@origamicore/projectmodels": "^0.1.7",
     "commander": "^9.3.0",
     "fs-extra": "^11.1.1",
+    "mongodb": "^6.2.0",
     "typescript": "^4.7.3",
     "websocket": "^1.0.34"
   }
