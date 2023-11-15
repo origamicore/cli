@@ -12,6 +12,11 @@ OriCli requires [Node.js](https://nodejs.org/) v14+ to run.
 npm install @origamicore/cli -g
 ```
 
+### Mongo Database Managment
+```sh
+occli mongo
+```
+
 ### Create Projects
 
 ```sh

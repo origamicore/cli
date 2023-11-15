@@ -9,11 +9,11 @@ const MAC_PLATFORM = 'darwin';
 const osPlatform = platform();
 export default class LocalServer
 {
-    constructor(port:number)
+    constructor(port:number,path:string='')
     {   
-        this.init(port);
+        this.init(port,path);
     }
-    async openUrl(url:string)
+    async openUrl(url:string )
     {
         let command;
         
@@ -30,7 +30,7 @@ export default class LocalServer
         exec(command);
 
     }
-    async init(port:number)
+    async init(port:number,path:string)
     { 
         let config=new ConfigModel({
             packageConfig:[
@@ -42,6 +42,6 @@ export default class LocalServer
         await origamicore.start()   
         console.log('>>start');
          
-        this.openUrl( 'http://localhost:'+port ); 
+        this.openUrl( 'http://localhost:'+port+path ); 
     }
 } 

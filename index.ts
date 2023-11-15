@@ -61,6 +61,11 @@ class OriCli
             Log('OcCli v'+pjson.version);
             new LocalServer(parseInt(defaultVar??'4000'))
         }
+        else if(method=='mongo'  )
+        {
+            Log('OcCli v'+pjson.version);
+            new LocalServer(parseInt(defaultVar??'4000'),'/#/orimongo/connections/Local')
+        }
         else
         {
             Log('OcCli v'+pjson.version);

@@ -162,9 +162,9 @@ export default class DbService
         let con= await this.connect(connection);
         const db = con.db(dbname);
         let value=await db.collection(collection).find(filter,option ).toArray()
-        console.log('>>>>>>');
-        console.log(value[1]);
-        console.log(JSON.stringify(value[1]) );
+        // console.log('>>>>>>');
+        // console.log(value[1]);
+        // console.log(JSON.stringify(value[1]) );
 
 
         let text:any[]=[]
@@ -175,9 +175,9 @@ export default class DbService
         let count=await db.collection(collection).countDocuments(filter)
         const bytes = BSON.serialize({value,count})
         const doc = BSON.deserialize(bytes);
-        console.log(doc);
-        console.log('---------------------------------');
-        console.log(EJSON.stringify(doc) )
+        // console.log(doc);
+        // console.log('---------------------------------');
+        // console.log(EJSON.stringify(doc) )
 
         return {count,value,text}
 
