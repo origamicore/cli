@@ -73,10 +73,8 @@ export default class DevService
     static async runProject(runtime:RuntimeType)
     {
         let dir =process.cwd();
-        await this.compile(runtime) 
-            console.log('>>>>>>>>>11111:',dir);
-        fs.watch(dir,{recursive:true},async(data,file)=>{
-            console.log('>>>>>>>>>',file);
+        await this.compile(runtime)  
+        fs.watch(dir,{recursive:true},async(data,file)=>{ 
             
             if(!file)return
             let isIgnore=false
