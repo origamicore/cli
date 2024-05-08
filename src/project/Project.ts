@@ -1,7 +1,14 @@
 import Log, { Colors } from "../log";
-import fs from 'fs'
+import fs, { writeFileSync } from 'fs'
 import Name from "../name";
-import Files from "../files";
+import Files from "../files"; 
+import Prompts from "./Prompts";
+import EndpointConfigModel from "./models/EndpointConfigModel";
+import ConfigGen from "./ConfigGen";
+import MongoConfigModel from "./models/MongoConfigModel";
+import RedisConfigModel from "./models/RedisConfigModel";
+import ApiConfigModel from "./models/ApiConfigModel";
+var Prompt = require('prompt-checkbox');
 const { exec,spawn  } = require('child_process'); 
 const fsx = require('fs-extra');
 export default class Project
@@ -31,14 +38,47 @@ export default class Project
     static async createProject(name:string,dir:string)
     {
         Log('Create '+name);
-        
+        let packages:string[] = await Prompts.packages.run() ;
+        let config=''
+        let npms:string[]=[]
+        let api:ApiConfigModel=new ApiConfigModel(packages,npms)
+        if(packages.length)
+        {
+            let manual:string=(await Prompts.Manual.run());
+            let endpoint:EndpointConfigModel=new EndpointConfigModel(packages,npms); 
+            let mongo:MongoConfigModel=new MongoConfigModel(packages,npms); 
+            let redis:RedisConfigModel=new RedisConfigModel(packages,npms)
+            if(manual=='Custom')
+            {
+                await endpoint.runCustom();
+                await mongo.runCustom();
+                await redis.runCustom(); 
+                await api.runCustom(); 
+            }  
+            config=ConfigGen.config(endpoint,mongo,redis,api); 
+        } 
         await this.execute('git -C '+dir+' clone https://github.com/origamicore/seed.git')
         fs.rmSync(dir+'/seed/.git', { recursive: true, force: true })
         fs.renameSync(dir+'/seed', dir+'/'+name);
+        Log('Installing ');
         await this.execute('npm install --prefix  '+ dir+'/'+name+'/');
+        if(npms.length)
+            Log('Installing Modules');
+        for(let npm of npms)
+        {
+            await this.execute(npm+' --prefix  '+ dir+'/'+name+'/');
+        }
+        if(config)
+        {
+            fs.writeFileSync(dir+'/'+name+'/Configs.ts',config)
+        }
         let json=JSON.parse(fs.readFileSync(dir+'/'+name+'/package.json').toString());
         json.name=name;
-        fs.writeFileSync(dir+'/'+name+'/package.json',JSON.stringify(json,null,4))
+        fs.writeFileSync(dir+'/'+name+'/package.json',JSON.stringify(json,null,4));
+        if(api.valid)
+        {
+            this.addModule(api.name,dir+'/'+name);
+        }
         Log('The '+name +' project was created successfully',Colors.Green);        
     }
     
