@@ -36,9 +36,9 @@ export default class Project
         fs.rmSync(dir+'/seed/.git', { recursive: true, force: true })
         fs.renameSync(dir+'/seed', dir+'/'+name);
         await this.execute('npm install --prefix  '+ dir+'/'+name+'/');
-        let json=JSON.parse(fs.readFileSync(dir+'/package.json').toString());
+        let json=JSON.parse(fs.readFileSync(dir+'/'+name+'/package.json').toString());
         json.name=name;
-        fs.writeFileSync(dir+'/package.json',JSON.stringify(json,null,4))
+        fs.writeFileSync(dir+'/'+name+'/package.json',JSON.stringify(json,null,4))
         Log('The '+name +' project was created successfully',Colors.Green);        
     }
     
