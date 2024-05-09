@@ -16,7 +16,7 @@ export default class MongoConfigModel
     async runCustom()
     { 
         if(!this.valid)return; 
-        this.dbName = await Prompts.getString(`Enter databse name (def=>${this.dbName}) :`,this.dbName) ;
+        this.dbName = await Prompts.getString(`Enter database name (def=>${this.dbName}) :`,this.dbName) ;
     }
     getConfig()
     { 

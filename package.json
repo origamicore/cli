@@ -1,6 +1,6 @@
 {
   "name": "@origamicore/cli",
-  "version": "3.1.9",
+  "version": "3.1.10",
   "bin": {
     "occli": "./dist/index.js"
   },
@@ -8,6 +8,7 @@
   "main": "./dist/index.js",
   "scripts": {
     "build": "npx tsc",
+    "new": "node ./dist/index.js -n test",
     "UI": "node ./dist/index.js -u",
     "publish": "npm publish"
   },

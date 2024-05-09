@@ -13,7 +13,7 @@ export default class ApiConfigModel
     async runCustom()
     { 
         if(!this.valid)return;
-        this.name = await Prompts.getString(`Enter databse name :`,this.name) ;
+        this.name = await Prompts.getString(`Enter Api name :`,this.name) ;
         console.log(this.name);
     }
     getConfig()

@@ -17,7 +17,8 @@ export default class Prompts
     static getString(title:string,defValue:string):string
     { 
       var n = prompt(title);
-      return n??defValue
+      if(!n)n=defValue
+      return n 
     }
     static packages=new Prompt({
         name: 'Packages',

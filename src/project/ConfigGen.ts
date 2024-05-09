@@ -19,15 +19,21 @@ export default new ConfigModel({
             str+=epConfig.config;
 
         }
-        if(endpoint.valid)
+        if(api.valid)
         {
-            let epConfig=endpoint.getConfig();
+            let epConfig=api.getConfig();
             imports+=epConfig.imports+'\n';
             str+=epConfig.config;
         }
         if(redis.valid)
         {
             let epConfig=redis.getConfig();
+            imports+=epConfig.imports+'\n';
+            str+=epConfig.config;
+        }
+        if(endpoint.valid)
+        {
+            let epConfig=endpoint.getConfig();
             imports+=epConfig.imports+'\n';
             str+=epConfig.config;
         }

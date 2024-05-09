@@ -8,6 +8,7 @@ import ConfigGen from "./ConfigGen";
 import MongoConfigModel from "./models/MongoConfigModel";
 import RedisConfigModel from "./models/RedisConfigModel";
 import ApiConfigModel from "./models/ApiConfigModel";
+var crypto= require('crypto')
 var Prompt = require('prompt-checkbox');
 const { exec,spawn  } = require('child_process'); 
 const fsx = require('fs-extra');
@@ -42,10 +43,10 @@ export default class Project
         let config=''
         let npms:string[]=[]
         let api:ApiConfigModel=new ApiConfigModel(packages,npms)
+        let endpoint:EndpointConfigModel=new EndpointConfigModel(packages,npms); 
         if(packages.length)
         {
             let manual:string=(await Prompts.Manual.run());
-            let endpoint:EndpointConfigModel=new EndpointConfigModel(packages,npms); 
             let mongo:MongoConfigModel=new MongoConfigModel(packages,npms); 
             let redis:RedisConfigModel=new RedisConfigModel(packages,npms)
             if(manual=='Custom')
@@ -78,6 +79,25 @@ export default class Project
         if(api.valid)
         {
             this.addModule(api.name,dir+'/'+name);
+        }
+        if(endpoint.valid && endpoint.sessionManager=='JWT')
+        {
+            fs.mkdirSync(dir+'/'+name+'/security')
+            
+            crypto.generateKeyPair('rsa', {
+                modulusLength: 1024,
+                publicKeyEncoding: {
+                type: 'spki',
+                format: 'pem'
+                },
+                privateKeyEncoding: {
+                type: 'pkcs8',
+                format: 'pem'
+                }
+            }, (err, publicKey, privateKey) => {
+                fs.writeFileSync(dir+'/'+name+'/security/jwtRS256.key',privateKey)
+                fs.writeFileSync(dir+'/'+name+'/security/jwtRS256.key.pub',publicKey) 
+            });
         }
         Log('The '+name +' project was created successfully',Colors.Green);        
     }
